@@ -1,0 +1,58 @@
+<html>
+<title>Firebase Messaging Demo</title>
+<style>
+    div {
+        margin-bottom: 15px;
+    }
+</style>
+<body>
+<div id="token"></div>
+<div id="msg"></div>
+<div id="notis"></div>
+<div id="err"></div>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
+
+<script>
+    let firebaseConfig = {
+        apiKey: "AIzaSyBpHzf9mxSr2Zd42enRyWZ-JBJZ5cDD8Y8",
+        authDomain: "inellipse-43d5c.firebaseapp.com",
+        projectId: "inellipse-43d5c",
+        storageBucket: "inellipse-43d5c.appspot.com",
+        messagingSenderId: "305917122766",
+        appId: "1:305917122766:web:d3164255227051af4c989f",
+        measurementId: "G-5EHJ0EHMW4"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+            .register("/demo/firebase-messaging-sw.js")
+            .then(function (registration) {
+                console.log("Registration successful, scope is:", registration.scope);
+                messaging.useServiceWorker(registration);
+                messaging.getToken({
+                    vapidKey: 'BIuXfUzKzwxI_y7fnf1WPV5Cj1Rw4f66k_e11YnRDXtylnq-lB7T6CKnIBhyZnPkWBTs4kOlhj05KkIbpyI-w7g',
+                    serviceWorkerRegistration: registration
+                })
+                    .then((currentToken) => {
+                        if (currentToken) {
+                            console.log('current token for client: ', currentToken);
+                        } else {
+                            console.log('No registration token available. Request permission to generate one.');
+                        }
+                    }).catch((err) => {
+                    console.log('An error occurred while retrieving token. ', err);
+                });
+            })
+            .catch(function (err) {
+                console.log("Service worker registration failed, error:", err);
+            });
+    }
+
+
+</script>
+</body>
+</html>
