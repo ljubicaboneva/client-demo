@@ -10,6 +10,7 @@
 <div id="msg"></div>
 <div id="notis"></div>
 <div id="err"></div>
+
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-messaging.js"></script>
@@ -40,6 +41,7 @@
                     .then((currentToken) => {
                         if (currentToken) {
                             console.log('current token for client: ', currentToken);
+                            document.getElementById('token').innerHTML = "Current token for client: " + currentToken;
                         } else {
                             console.log('No registration token available. Request permission to generate one.');
                         }
@@ -50,9 +52,8 @@
             .catch(function (err) {
                 console.log("Service worker registration failed, error:", err);
             });
+
     }
-
-
 </script>
 </body>
 </html>
